@@ -20,13 +20,14 @@ public static class PostState
         string Status,
         DateTimeOffset Timestamp
     );
-    
+
     public static void MapEndpoint(IEndpointRouteBuilder routes)
     {
         routes.MapPost("/", Handler)
+            .ProducesValidationProblem()
             .WithName("PostState")
             .WithSummary("Create a new equipment state event")
-            .ProducesValidationProblem();
+            .Produces<Response>();
     }
 
     public static async Task<IResult> Handler(Request request, [FromServices] StateDbContext db)

@@ -2,7 +2,6 @@ using FactoryApi.Data;
 using FactoryApi.Data.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace FactoryApi.Endpoints;
 
@@ -13,7 +12,7 @@ public static class GetStates
         group.MapGet("/states", Handler)
             .WithName("GetStates")
             .WithSummary("Lists state events")
-            .Produces<List<StateEvent>>(StatusCodes.Status200OK);
+            .Produces<List<StateEvent>>();
     }
 
     private static async Task<IResult> Handler([FromServices] StateDbContext db)
