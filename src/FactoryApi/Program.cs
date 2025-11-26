@@ -11,7 +11,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<StateDbContext>(options =>
     options.UseNpgsql(connectionString));
+
 builder.Services.AddOpenApi();
+builder.Services.AddValidation();
 
 var app = builder.Build();
 
