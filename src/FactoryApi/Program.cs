@@ -17,6 +17,15 @@ builder.Services.AddValidation();
 
 var app = builder.Build();
 
+// Seed migrate and seed database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<StateDbContext>();
+    await context.Database.MigrateAsync();
+    await DbSeeder.SeedAsync(context);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
