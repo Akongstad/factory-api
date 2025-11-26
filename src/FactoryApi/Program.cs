@@ -1,10 +1,14 @@
 using FactoryApi.Data;
+using FactoryApi.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("PGDefaultConnection");
+var configuration = builder.Configuration;
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<StateDbContext>(options =>
     options.UseNpgsql(connectionString));
 // builder.Services.AddScoped<IStateRepository, StateRepository>();
@@ -18,8 +22,6 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-// app.MapStateEndpoints();
-
-app.MapGet("/", () => "Hello World!");
+app.MapHealthEndpoints();
 
 app.Run();
