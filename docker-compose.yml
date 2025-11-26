@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: factoryapi-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-state_db}
+      POSTGRES_USER: ${POSTGRES_USER:-sa}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    networks:
+      - factory-net
+  grafana:
+    image: grafana/grafana:latest
+    container_name: factoryapi-grafana
+    depends_on:
+      - postgres
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - factory-net
+      
+volumes:
+  postgres-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  factory-net:
+    driver: bridge
