@@ -11,7 +11,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<StateDbContext>(options =>
     options.UseNpgsql(connectionString));
-// builder.Services.AddScoped<IStateRepository, StateRepository>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -23,5 +22,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapHealthEndpoints();
+app.MapStateEndpoints();
 
 app.Run();
