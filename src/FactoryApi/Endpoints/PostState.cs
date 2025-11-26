@@ -7,14 +7,14 @@ namespace FactoryApi.Endpoints;
 
 public static class PostState
 {
-    private record Request(
+    public record Request(
         [Required] long EquipmentId,
         [Required] EquipmentStatus Status,
-        [Required, MaxLength(5), MinLength(2)] string WorkerShortName,
+        [Required, MinLength(2), MaxLength(5)] string WorkerShortName,
         long? JobId
     );
 
-    private record Response(
+    public record Response(
         long Id,
         long EquipmentId,
         string Status,
@@ -26,13 +26,10 @@ public static class PostState
         routes.MapPost("/", Handler)
             .WithName("PostState")
             .WithSummary("Create a new equipment state event")
-            .WithDescription("Creates a new equipment state event in the system.")
-            .Produces<Response>(StatusCodes.Status201Created)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesValidationProblem();
     }
 
-    private static async Task<IResult> Handler([FromBody] Request request, [FromServices] StateDbContext db)
+    public static async Task<IResult> Handler(Request request, [FromServices] StateDbContext db)
     {
         var stateEvent = new StateEvent()
         {
