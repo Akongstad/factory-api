@@ -4,15 +4,18 @@ factory-state-management exposes api endpoints to store and retrieve state updat
 
 TODOs:
 
-- Grafana dashboards
-- Store DB secrets in environment and pass in `IConfiguration` to replace in appsettings.json ``.
-- Unit tests?
-- Integration tests?
-- Add API Dockerfile
-- Generate SSL dev certs and mount them to Dockerfile
-- Add jwt authentication and authorize endpoints with policies.
+- Store DB secrets in environment and pass in `IConfiguration` to replace in appsettings.json `DefaultConnection`.
+- Integration tests.
+- Add API Dockerfile and Generate SSL dev certs and mount them to Dockerfile.
+- Add jwt authentication and authorize endpoints with policies. E.g., `[Authrize(Policy="Worker")]`
 
-## MVP Solution Components
+## Repository Structure
+
+- [src/FactoryApi](src/FactoryApi): C# MinimalApi project that the defines the StateEvent model and exposes PostState and GetState endpoints.
+- [tests/FactoryTests](src/FactoryTests): C# xUnit test project for FactoryApi with 
+- [grafana](grafana/): grafana as code datasource, alert, and dashboard provisioning config.
+
+Solution Components:
 
 - _FactoryAPI_: C# MinimalApi project
 - _Prostgres_: Persistence for state events.
@@ -37,6 +40,9 @@ Testing:
 
 ## Quickstart
 
+### Prereqs
+
+- .Net10
 - Docker Daemon
 - Configure HTTPS dev certs (see below)
 - Set Postgres secrets (see below)
@@ -70,7 +76,7 @@ dotnet ef migrations add --project src/FactoryApi/FactoryApi.csproj --startup-pr
 dotnet ef database update --project src/FactoryApi/FactoryApi.csproj --startup-project src/FactoryApi/FactoryApi.csproj
 ```
 
-Example connection string:
+*Example connection string:*
 
 ```text
 "Host=localhost;Port=5432;Database=state_db;Username=sa;Password=password;Trust Server Certificate=true;"

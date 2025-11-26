@@ -4,6 +4,10 @@ namespace FactoryApi.Data;
 
 public static class DbSeeder
 {
+    /// <summary>
+    /// Seed the database context if DB is empty
+    /// </summary>
+    /// <param name="context"></param>
     public static async Task SeedAsync(StateDbContext context)
     {
         if (context.StateEvents.Any())
