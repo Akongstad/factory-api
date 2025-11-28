@@ -94,3 +94,4 @@ fabric.properties
 **.env
 .idea
 **/**DotSettings.user
+**/**DS_Store

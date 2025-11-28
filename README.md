@@ -2,7 +2,20 @@
 
 factory-state-management exposes api endpoints to store and retrieve state update events for factory equipment.
 
-TODOs:
+![Equipment Overview Dashboard](./assets/equipment-overview-dashboard.png)
+_Equipment Overview Dashboard showing real-time status._
+
+![Historical Timeline dashboard](./assets/historical-dashboard.png)
+_Historical Timeline Dashboard visualizing state changes over time._
+
+**Features**:
+
+- _FactoryAPI_: C# MinimalApi project for storing history of changes to equipment sates. POST StateEvent and GET StateEvents endpoints.
+- _Postgres database_ for persisting time-based StateEvents.
+- _Grafana Historical Timeline Dashboard_: Allows showing and browsing the historical changes to the equipmeng.
+- _Grafana Equipment Overview Dashboard_: Shows the state (red/yellow/red) of all equipment ids that have had a StateEvent posted. Live updates are reflected in the dashboards.
+
+**TODOs:**
 
 - Store DB secrets in environment and pass in `IConfiguration` to replace in appsettings.json `DefaultConnection`.
 - Integration tests.
@@ -17,7 +30,7 @@ TODOs:
 
 Solution Components:
 
-- _FactoryAPI_: C# MinimalApi project
+- _FactoryAPI_: C# MinimalApi project for storing history of changes to equipment sates. POST StateEvent and GET StateEvents endpoints.
 - _Prostgres_: Persistence for state events.
 - _Grafana_: Visualization of current machine states and of states of the equipment.
 
@@ -74,6 +87,10 @@ dotnet ef migrations add --project src/FactoryApi/FactoryApi.csproj --startup-pr
 
 ```bash
 dotnet ef database update --project src/FactoryApi/FactoryApi.csproj --startup-project src/FactoryApi/FactoryApi.csproj
+```
+
+```bash
+
 ```
 
 *Example connection string:*
